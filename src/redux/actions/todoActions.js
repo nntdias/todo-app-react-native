@@ -8,7 +8,7 @@ export const addTodoText = text => ({
 	}),
 });
 
-export const updateTodoText = todo => ({
+export const updateTodo = todo => ({
 	type: 'TODO_INSERT_UPDATE',
 	todo,
 });

@@ -1,28 +1,52 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import {SafeAreaView, Text, StyleSheet, View, FlatList} from 'react-native';
-import ButtonPrimary from '../components/common/Button';
 import TodoItem from '../components/todoItem/TodoItem';
 import {connect} from 'react-redux';
-import {addTodoText as addTodoTextAction, removeTodo as removeTodoAction} from '../redux/actions/todoActions';
+import {
+	addTodoText as addTodoTextAction,
+	removeTodo as removeTodoAction,
+	updateTodo as updateTodoAction,
+} from '../redux/actions/todoActions';
+import TodoItemAdd from '../components/todoItem/TodoItemAdd';
 
-const ToDoScreen = ({itemsHashSet, addTodoText, removeTodo}) => {
+const ToDoScreen = ({itemsHashSet, addTodoText, removeTodo, updateTodo}) => {
+	const todoList = Object.values(itemsHashSet).sort((a, b) => a.id - b.id);
+
 	return (
 		<SafeAreaView style={styles.toDoScreen}>
 			<View style={styles.header}>
 				<Text style={styles.headerTitle}>TODO APP TEST</Text>
 			</View>
 			<View style={styles.body}>
+				<View style={styles.infoContainer}>
+					<Text style={styles.infoContainerText}>{`Pending: ${
+						todoList.filter(todo => todo.checked !== true).length
+					}`}</Text>
+					<Text style={styles.infoContainerText}>{`Done: ${
+						todoList.filter(todo => todo.checked).length
+					}`}</Text>
+					<Text style={styles.infoContainerText}>{`Total: ${todoList.length}`}</Text>
+				</View>
 				<View style={styles.bodyContent}>
 					<FlatList
-						data={Object.values(itemsHashSet)}
+						data={todoList}
 						keyExtractor={todo => todo.id}
 						renderItem={({item: todo, index}) => (
-							<TodoItem index={index} todo={todo} onPress={() => removeTodo(todo.id)} />
+							<TodoItem
+								index={index}
+								todo={todo}
+								onPress={todoPressed => {
+									const todoCloned = todoPressed.clone();
+									todoCloned.markAsDone();
+									updateTodo(todoCloned);
+								}}
+								onRemovePress={removeTodo}
+							/>
 						)}
 					/>
 				</View>
-				<ButtonPrimary title="ADD NEW" onPress={() => addTodoText('test')} />
+				<TodoItemAdd onTextSubmit={addTodoText} />
 			</View>
 		</SafeAreaView>
 	);
@@ -34,25 +58,34 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	header: {
-		height: 50,
-		backgroundColor: '#48825d',
+		height: 52,
+		backgroundColor: '#3F51B5',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	headerTitle: {
-		fontSize: 22,
+		fontSize: 19,
 		color: 'white',
 	},
 	body: {
 		paddingTop: 10,
 		paddingBottom: 20,
-		paddingHorizontal: 10,
+		paddingHorizontal: 12,
 		flex: 1,
 	},
 	bodyContent: {
 		flex: 1,
+		paddingTop: 10,
 		paddingBottom: 16,
 	},
+	infoContainer: {
+		borderBottomColor: '#BDBDBD',
+		borderBottomWidth: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		paddingBottom: 10,
+	},
+	infoContainerText: {},
 });
 
 ToDoScreen.propTypes = {};
@@ -64,5 +97,6 @@ export default connect(
 	{
 		addTodoText: addTodoTextAction,
 		removeTodo: removeTodoAction,
+		updateTodo: updateTodoAction,
 	},
 )(ToDoScreen);

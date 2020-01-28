@@ -18,11 +18,11 @@ const ButtonPrimary = ({onPress, title, style}) => {
 const styles = StyleSheet.create({
 	primary: {
 		backgroundColor: '#48825d',
-		marginHorizontal: 60,
 		height: 32,
 		borderRadius: 3,
 		justifyContent: 'center',
 		alignItems: 'center',
+		padding: 10,
 	},
 	textPrimary: {
 		fontSize: 16,
