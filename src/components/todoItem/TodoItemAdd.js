@@ -12,7 +12,7 @@ const TodoItemAdd = ({onTextSubmit}) => {
 	return (
 		<View style={styles.textBox}>
 			<TextInput
-				placeholder="Add todo"
+				placeholder="New item"
 				onSubmitEditing={onTextSubmitHandler}
 				style={styles.textBoxInput}
 				onChangeText={text => setValue(text)}
@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		paddingVertical: 3,
+		paddingTop: 14,
+		borderTopColor: '#BDBDBD',
+		borderTopWidth: 1,
 	},
 	textBoxBtn: {
 		height: 40,

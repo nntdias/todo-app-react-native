@@ -16,7 +16,7 @@ const ToDoScreen = ({itemsHashSet, addTodoText, removeTodo, updateTodo}) => {
 	return (
 		<SafeAreaView style={styles.toDoScreen}>
 			<View style={styles.header}>
-				<Text style={styles.headerTitle}>TODO APP TEST</Text>
+				<Text style={styles.headerTitle}>TODO APP</Text>
 			</View>
 			<View style={styles.body}>
 				<View style={styles.infoContainer}>
