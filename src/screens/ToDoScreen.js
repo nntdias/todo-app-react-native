@@ -9,9 +9,12 @@ import {
 	updateTodo as updateTodoAction,
 } from '../redux/actions/todoActions';
 import TodoItemAdd from '../components/todoItem/TodoItemAdd';
+import TodoModel from '../model/todoModel';
 
 const ToDoScreen = ({itemsHashSet, addTodoText, removeTodo, updateTodo}) => {
-	const todoList = Object.values(itemsHashSet).sort((a, b) => a.id - b.id);
+	const todoList = Object.values(itemsHashSet)
+		.map(data => new TodoModel(data))
+		.sort((a, b) => (a.checked ? 1 : -1));
 
 	return (
 		<SafeAreaView style={styles.toDoScreen}>

@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
 	lineThrough: {
 		textDecorationLine: 'line-through',
 		textDecorationStyle: 'solid',
+		color: '#babdc0',
 	},
 });
 
